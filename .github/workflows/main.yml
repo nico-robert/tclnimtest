@@ -46,7 +46,7 @@ jobs:
     - name: Save artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: artifacts Tcl90
+        name: Tcl90
         path: |
           C:\Tcl90\bin
           C:\Tcl90\lib
