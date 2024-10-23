@@ -24,6 +24,6 @@ jobs:
         tclsh --version
 
     # Étape 3 : Lancer les scripts/tests Tcl
-    - name: Run Tcl scripts/tests
+    - name: Run Tcl scripts/test
       run: |
-        tclsh ./tests/your_test_script.tcl
+        tclsh ./test/test_script.tcl
