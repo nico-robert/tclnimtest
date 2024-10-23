@@ -17,15 +17,6 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    # Étape 2 : Configurer Visual Studio (installer les outils de compilation)
-    - name: Setup Visual Studio environment
-      run: |
-        echo "Installing Visual Studio Build Tools..."
-        choco install visualstudio2022buildtools -y
-        choco install visualstudio2022-workload-vctools -y
-        echo "Setting up Developer Command Prompt for Visual Studio..."
-        call "C:\Program Files\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
-
     # Étape 3 : Télécharger les sources de Tcl
     - name: Download Tcl source
       run: |
