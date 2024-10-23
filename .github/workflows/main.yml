@@ -41,3 +41,12 @@ jobs:
     - name: Run Tcl scripts/tests
       run: |
         C:\Tcl90\bin\tclsh90.exe ./test/test_script.tcl
+
+    # Étape 7 : Sauvegarder les fichiers DLL et exécutables générés en tant qu'artifacts
+    - name: Save artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: artifacts Tcl90
+        path: |
+          C:\Tcl90\bin
+          C:\Tcl90\lib
