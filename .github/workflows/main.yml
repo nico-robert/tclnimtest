@@ -1,4 +1,4 @@
-name: CI for Tcl on Windows
+name: CI for Tcl on Windows using nmake
 
 on:
   push:
@@ -17,13 +17,34 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    # Étape 2 : Installer Tcl
-    - name: Install Tcl
+    # Étape 2 : Configurer Visual Studio (installer les outils de compilation)
+    - name: Setup Visual Studio environment
       run: |
-        choco install tcl --version=9.0.0 -y
-        tclsh --version
+        echo "Installing Visual Studio Build Tools..."
+        choco install visualstudio2022buildtools -y
+        choco install visualstudio2022-workload-vctools -y
+        echo "Setting up Developer Command Prompt for Visual Studio..."
+        call "C:\Program Files\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
 
-    # Étape 3 : Lancer les scripts/tests Tcl
-    - name: Run Tcl scripts/test
+    # Étape 3 : Télécharger les sources de Tcl
+    - name: Download Tcl source
       run: |
-        tclsh ./test/test_script.tcl
+        curl -L https://sourceforge.net/projects/tcl/files/Tcl/9.0.0/tcl900-src.zip -o tcl900-src.zip
+        tar -xzf tcl900-src.zip
+
+    # Étape 4 : Compiler Tcl avec nmake
+    - name: Build Tcl with nmake
+      run: |
+        cd tcl9.0.0\win
+        nmake -f makefile.vc INSTALLDIR=C:\Tcl90
+        nmake -f makefile.vc install INSTALLDIR=C:\Tcl90
+
+    # Étape 5 : Vérifier l'installation de Tcl
+    - name: Verify Tcl installation
+      run: |
+        C:\Tcl90\bin\tclsh.exe --version
+
+    # Étape 6 : Lancer les scripts/tests Tcl
+    - name: Run Tcl scripts/tests
+      run: |
+        C:\Tcl90\bin\tclsh.exe ./test/test_script.tcl
