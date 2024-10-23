@@ -58,5 +58,5 @@ jobs:
         nim-version: 2.0.6  # Vous pouvez remplacer par une version spécifique, comme '2.0.6'
 
     # Étape 3 : Vérifier l'installation de Nim
-    - name: Check Nim version
-      run: nim --version
+    - name: Check install pixie
+      run: nimble install pixie 5.0.7
