@@ -16,12 +16,19 @@ jobs:
     # Étape 1 : Vérifiez le dépôt
     - name: Checkout repository
       uses: actions/checkout@v3
+          # Note msvc defaults to 64-bit
+
+    # Étape 2 : Initialiser MSVC
+    - name: Init MSVC
+      uses: ilammy/msvc-dev-cmd@v1
+      with:
+        arch: x64
 
     # Étape 3 : Télécharger les sources de Tcl
     - name: Download Tcl source
       run: |
         curl -L https://sourceforge.net/projects/tcl/files/Tcl/9.0.0/tcl900-src.zip -o tcl900-src.zip
-        tar -xzf tcl900-src.zip
+        tar -xf tcl900-src.zip
 
     # Étape 4 : Compiler Tcl avec nmake
     - name: Build Tcl with nmake
