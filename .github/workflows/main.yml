@@ -20,7 +20,7 @@ jobs:
     # Étape 2 : Installer Tcl
     - name: Install Tcl
       run: |
-        choco install tcl -y
+        choco install tcl --version=9.0.0 -y
         tclsh --version
 
     # Étape 3 : Lancer les scripts/tests Tcl
