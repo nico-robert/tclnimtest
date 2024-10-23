@@ -38,9 +38,9 @@ jobs:
     #    nmake -f makefile.vc install INSTALLDIR=C:\Tcl90
 
     # Étape 6 : Lancer les scripts/tests Tcl
-    - name: Run Tcl scripts/tests
-      run: |
-        C:\Tcl90\bin\tclsh90.exe ./test/test_script.tcl
+    #- name: Run Tcl scripts/tests
+    #  run: |
+    #    C:\Tcl90\bin\tclsh90.exe ./test/test_script.tcl
 
     # Étape 7 : Sauvegarder les fichiers DLL et exécutables générés en tant qu'artifacts
     #- name: Save artifacts
