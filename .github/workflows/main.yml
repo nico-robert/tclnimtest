@@ -10,7 +10,9 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: |
+      windows-latest
+      ubuntu-latest
 
     steps:
     # Étape 1 : Vérifiez le dépôt
