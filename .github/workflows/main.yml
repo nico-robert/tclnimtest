@@ -59,4 +59,4 @@ jobs:
 
     # Étape 3 : Vérifier l'installation de Nim
     - name: Check install pixie
-      run: nimble install pixie
+      run: nimble install pixie@5.0.7
