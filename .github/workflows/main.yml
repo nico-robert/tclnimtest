@@ -29,13 +29,11 @@ jobs:
       run: |
         curl -L https://sourceforge.net/projects/tcl/files/Tcl/8.6.14/tcl8614-src.zip -o tcl8614-src.zip
         tar -xf tcl8614-src.zip
-        curl -L https://sourceforge.net/projects/tcl/files/Tcl/8.6.14/tk8614-src.zip -o tk8614-src.zip
-        tar -xf tk8614-src.zip
 
     # Étape 4 : Compiler Tcl avec nmake
     - name: Build Tcl with nmake
       run: |
-        cd tcl8614-src\win
+        cd tcl8614\win
         nmake -f makefile.vc INSTALLDIR=C:\Tcl86
         nmake -f makefile.vc install INSTALLDIR=C:\Tcl86
     # Étape 5 : Compiler Tk avec nmake
