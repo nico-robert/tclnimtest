@@ -42,8 +42,8 @@ jobs:
     - name: Build Tk with nmake
       run: |
         cd tk8.6.14\win
-        nmake -f makefile.vc INSTALLDIR=C:\Tcl86 TCLDIR=../tcl8.6.14
-        nmake -f makefile.vc install INSTALLDIR=C:\Tcl86 TCLDIR=../tcl8.6.14
+        nmake -f makefile.vc INSTALLDIR=C:\Tcl86 TCLDIR=../../tcl8.6.14
+        nmake -f makefile.vc install INSTALLDIR=C:\Tcl86 TCLDIR=../../tcl8.6.14
     # Étape 6 : Lancer les scripts/tests Tcl
     #- name: Run Tcl scripts/tests
     #  run: |
