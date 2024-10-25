@@ -29,6 +29,12 @@ jobs:
         curl -L https://sourceforge.net/projects/tcl/files/Tcl/8.6.14/tk8.6.14-src.tar.gz -o tk8.6.14-src.tar.gz
         tar -xzf tk8.6.14-src.tar.gz
 
+    - name: Set up GCC
+      uses: egor-tensin/setup-gcc@v1
+      with:
+        version: latest
+        platform: x64
+
     # Étape 4 : Compiler Tcl avec nmake
     - name: Build Tcl with nmake
       run: |
