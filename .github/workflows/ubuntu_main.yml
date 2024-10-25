@@ -24,10 +24,10 @@ jobs:
     # Étape 3 : Télécharger les sources de Tcl
     - name: Download Tcl source
       run: |
-        curl -L https://sourceforge.net/projects/tcl/files/Tcl/8.6.14/tcl8614-src.zip -o tcl8614-src.zip
-        tar -xf tcl8614-src.zip
-        curl -L https://sourceforge.net/projects/tcl/files/Tcl/8.6.14/tk8614-src.zip -o tk8614-src.zip
-        tar -xf tk8614-src.zip
+        curl -L https://sourceforge.net/projects/tcl/files/Tcl/8.6.14/tcl8614-src.tar.gz -o tcl8614-src.tar.gz
+        tar -xzf tcl8614-src.tar.gz
+        curl -L https://sourceforge.net/projects/tcl/files/Tcl/8.6.14/tk8614-src.tar.gz -o tk8614-src.tar.gz
+        tar -xzf tk8614-src.tar.gz
 
     # Étape 4 : Compiler Tcl avec nmake
     - name: Build Tcl with nmake
