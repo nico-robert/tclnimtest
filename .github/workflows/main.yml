@@ -35,28 +35,28 @@ jobs:
     # Étape 4 : Compiler Tcl avec nmake
     - name: Build Tcl with nmake
       run: |
-        cd tcl8614\win
+        cd tcl8614-src\win
         nmake -f makefile.vc INSTALLDIR=C:\Tcl86
         nmake -f makefile.vc install INSTALLDIR=C:\Tcl86
     # Étape 5 : Compiler Tk avec nmake
-    - name: Build Tk with nmake
-      run: |
-        cd tk8614\win
-        nmake -f makefile.vc INSTALLDIR=C:\Tcl86 TCLDIR=./tcl8614
-        nmake -f makefile.vc install INSTALLDIR=C:\Tcl86 TCLDIR=./tcl8614
+    #- name: Build Tk with nmake
+    #  run: |
+    #    cd tk8614\win
+    #    nmake -f makefile.vc INSTALLDIR=C:\Tcl86 TCLDIR=./tcl8614
+    #    nmake -f makefile.vc install INSTALLDIR=C:\Tcl86 TCLDIR=./tcl8614
     # Étape 6 : Lancer les scripts/tests Tcl
     #- name: Run Tcl scripts/tests
     #  run: |
     #    C:\Tcl90\bin\tclsh90.exe ./test/test_script.tcl
 
     # Étape 7 : Sauvegarder les fichiers DLL et exécutables générés en tant qu'artifacts
-    - name: Save artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        name: Tcl86
-        path: |
-          C:\Tcl86\bin
-          C:\Tcl86\lib
+    #- name: Save artifacts
+    #  uses: actions/upload-artifact@v3
+    #  with:
+    #    name: Tcl86
+    #    path: |
+    #      C:\Tcl86\bin
+    #      C:\Tcl86\lib
 
     # Étape 2 : Installer Nim
     #- name: Install Nim
