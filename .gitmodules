@@ -1,0 +1,3 @@
+[submodule "pix"]
+	path = pix
+	url = https://github.com/nico-robert/pix.git
