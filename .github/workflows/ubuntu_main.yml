@@ -1,0 +1,76 @@
+name: CI for Tcl on Ubuntu
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    # Étape 1 : Vérifiez le dépôt
+    - name: Checkout repository
+      uses: actions/checkout@v3
+          # Note msvc defaults to 64-bit
+      with:
+        submodules: recursive  # Récupère tous les sous-modules de manière récursive
+        fetch-depth: 0         # Nécessaire pour récupérer tout l'historique et non une version superficielle
+
+    # Étape 3 : Télécharger les sources de Tcl
+    - name: Download Tcl source
+      run: |
+        curl -L https://sourceforge.net/projects/tcl/files/Tcl/8.6.14/tcl8614-src.zip -o tcl8614-src.zip
+        tar -xf tcl8614-src.zip
+        curl -L https://sourceforge.net/projects/tcl/files/Tcl/8.6.14/tk8614-src.zip -o tk8614-src.zip
+        tar -xf tk8614-src.zip
+
+    # Étape 4 : Compiler Tcl avec nmake
+    - name: Build Tcl with nmake
+      run: |
+        cd tcl8.6.14/unix
+        configure --prefix=/usr/lib/x86_64-linux-gnu
+        make
+        make test
+        make install
+    # Étape 5 : Compiler Tk avec nmake
+    - name: Build Tk with nmake
+      run: |
+        cd tk8.6.14\win
+        configure --with-tcl=/usr/lib/x86_64-linux-gnu
+        make
+        make test
+        make install
+    # Étape 6 : Lancer les scripts/tests Tcl
+    #- name: Run Tcl scripts/tests
+    #  run: |
+    #    C:\Tcl90\bin\tclsh90.exe ./test/test_script.tcl
+
+    # Étape 7 : Sauvegarder les fichiers DLL et exécutables générés en tant qu'artifacts
+    #- name: Save artifacts
+    #  uses: actions/upload-artifact@v3
+    #  with:
+    #    name: Tcl86
+    #    path: |
+    #      C:\Tcl86\bin
+    #      C:\Tcl86\lib
+
+    # Étape 2 : Installer Nim
+    - name: Install Nim
+      uses: jiro4989/setup-nim-action@v2
+      with:
+        nim-version: 2.0.6  # Vous pouvez remplacer par une version spécifique, comme '2.0.6'
+
+    # Étape 3 : Vérifier l'installation de Nim
+    - name: Check install pixie
+      run: nimble install pixie@5.0.7
+
+    # Étape 3 : Vérifier l'installation de Nim
+    - name: Compiler pix
+      run: |
+        cd pix
+        nimble tclWrapper
