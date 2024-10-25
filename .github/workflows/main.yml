@@ -17,6 +17,9 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
           # Note msvc defaults to 64-bit
+      with:
+        submodules: recursive  # Récupère tous les sous-modules de manière récursive
+        fetch-depth: 0         # Nécessaire pour récupérer tout l'historique et non une version superficielle
 
     # Étape 2 : Initialiser MSVC
     - name: Init MSVC
@@ -59,11 +62,17 @@ jobs:
     #      C:\Tcl86\lib
 
     # Étape 2 : Installer Nim
-    #- name: Install Nim
-    #  uses: jiro4989/setup-nim-action@v2
-    #  with:
-    #    nim-version: 2.0.6  # Vous pouvez remplacer par une version spécifique, comme '2.0.6'
+    - name: Install Nim
+      uses: jiro4989/setup-nim-action@v2
+      with:
+        nim-version: 2.0.6  # Vous pouvez remplacer par une version spécifique, comme '2.0.6'
 
     # Étape 3 : Vérifier l'installation de Nim
-    #- name: Check install pixie
-    #  run: nimble install pixie@5.0.7
+    - name: Check install pixie
+      run: nimble install pixie@5.0.7
+
+    # Étape 3 : Vérifier l'installation de Nim
+    - name: Compiler pix
+      run: |
+        cd pix/src
+        nimble tclWrapper
