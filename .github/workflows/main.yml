@@ -74,5 +74,5 @@ jobs:
     # Étape 3 : Vérifier l'installation de Nim
     - name: Compiler pix
       run: |
-        cd pix/src
+        cd pix
         nimble tclWrapper
