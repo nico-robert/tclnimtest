@@ -52,26 +52,35 @@ jobs:
         sudo cp -f /tmp/tcl/tcl86/lib/libtkstub8.6.a /usr/lib/x86_64-linux-gnu
 
     # Étape 7 : Sauvegarder les fichiers DLL et exécutables générés en tant qu'artifacts
+    #- name: Save artifacts
+    #  uses: actions/upload-artifact@v3
+    #  with:
+    #    name: Tcl86
+    #    path: |
+    #      /usr/lib/x86_64-linux-gnu/libtclstub8.6.a
+    #      /usr/lib/x86_64-linux-gnu/libtkstub8.6.a
+
+    # Étape 2 : Installer Nim
+    - name: Install Nim
+      uses: jiro4989/setup-nim-action@v2
+      with:
+        nim-version: 2.0.6  # Vous pouvez remplacer par une version spécifique, comme '2.0.6'
+
+    # Étape 3 : Vérifier l'installation de Nim
+    - name: Check install pixie
+      run: nimble install pixie@5.0.7
+
+    # Étape 3 : Vérifier l'installation de Nim
+    - name: Compiler pix
+      run: |
+        cd pix
+        nimble tclWrapper
+    # Étape 7 : Sauvegarder les fichiers DLL et exécutables générés en tant qu'artifacts
     - name: Save artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: Tcl86
+        name: nimTcl86
         path: |
           /usr/lib/x86_64-linux-gnu/libtclstub8.6.a
           /usr/lib/x86_64-linux-gnu/libtkstub8.6.a
-
-    # Étape 2 : Installer Nim
-    #- name: Install Nim
-    #  uses: jiro4989/setup-nim-action@v2
-    #  with:
-    #    nim-version: 2.0.6  # Vous pouvez remplacer par une version spécifique, comme '2.0.6'
-
-    # Étape 3 : Vérifier l'installation de Nim
-    #- name: Check install pixie
-    #  run: nimble install pixie@5.0.7
-
-    # Étape 3 : Vérifier l'installation de Nim
-    #- name: Compiler pix
-    #  run: |
-    #    cd pix
-    #    nimble tclWrapper
+          pix/linux-x86_64/libpix0.3.so
