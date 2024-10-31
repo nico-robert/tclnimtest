@@ -32,7 +32,7 @@ jobs:
     # Étape 4 : Compiler Tcl avec nmake
     - name: Build Tcl with nmake
       run: |
-        mkdir /tmp/tcl/tcl86
+        mkdir -p /tmp/tcl/tcl86
         cd tcl8.6.14/unix
         ./configure --prefix=/tmp/tcl/tcl86
         make
