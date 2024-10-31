@@ -37,7 +37,7 @@ jobs:
     # Étape 5 : Install X11
     - name: Install X11
       run: |
-        brew install libx11
+        brew install --cask xquartz
 
     # Étape 4 : Compiler Tcl avec nmake
     - name: Build Tcl with nmake
