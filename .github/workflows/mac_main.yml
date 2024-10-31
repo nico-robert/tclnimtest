@@ -29,6 +29,16 @@ jobs:
         curl -L https://sourceforge.net/projects/tcl/files/Tcl/8.6.14/tk8.6.14-src.tar.gz -o tk8.6.14-src.tar.gz
         tar -xzf tk8.6.14-src.tar.gz
 
+    # Étape 4 : Update Brew
+    - name: Update Homebrew
+      run: |
+        brew update
+
+    # Étape 5 : Install X11
+    - name: Install X11
+      run: |
+        brew install libx11
+
     # Étape 4 : Compiler Tcl avec nmake
     - name: Build Tcl with nmake
       run: |
@@ -50,15 +60,6 @@ jobs:
     #    mkdir -p /usr/lib/x86_64-linux-gnu
     #    sudo cp -f /tmp/tcl/tcl86/lib/libtclstub8.6.a /usr/lib/x86_64-linux-gnu
     #    sudo cp -f /tmp/tcl/tcl86/lib/libtkstub8.6.a /usr/lib/x86_64-linux-gnu
-
-    # Étape 7 : Sauvegarder les fichiers DLL et exécutables générés en tant qu'artifacts
-    #- name: Save artifacts
-    #  uses: actions/upload-artifact@v3
-    #  with:
-    #    name: Tcl86
-    #    path: |
-    #      /usr/lib/x86_64-linux-gnu/libtclstub8.6.a
-    #      /usr/lib/x86_64-linux-gnu/libtkstub8.6.a
 
     # Étape 2 : Installer Nim
     #- name: Install Nim
