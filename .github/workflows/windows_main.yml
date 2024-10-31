@@ -76,3 +76,11 @@ jobs:
       run: |
         cd pix
         nimble tclWrapper
+
+    # Étape 7 : Sauvegarder les fichiers DLL et exécutables générés en tant qu'artifacts
+    - name: Save artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: nimWindowsTcl86
+        path: |
+          pix/win32-x86_64/pix0.3.dll

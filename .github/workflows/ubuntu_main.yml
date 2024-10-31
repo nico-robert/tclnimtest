@@ -79,7 +79,7 @@ jobs:
     - name: Save artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: nimTcl86
+        name: nimLinuxTcl86
         path: |
           /usr/lib/x86_64-linux-gnu/libtclstub8.6.a
           /usr/lib/x86_64-linux-gnu/libtkstub8.6.a
