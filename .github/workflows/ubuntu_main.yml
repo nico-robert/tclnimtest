@@ -48,7 +48,8 @@ jobs:
     - name: Create Directory
       run: |
         mkdir -p /usr/lib/x86_64-linux-gnu
-        cp /tmp/tcl/tcl86/lib/libtcl8.6.so /usr/lib/x86_64-linux-gnu
+        cp -f /tmp/tcl/tcl86/lib/libtclstub8.6.a /usr/lib/x86_64-linux-gnu
+        cp -f /tmp/tcl/tcl86/lib/libtkstub8.6.a /usr/lib/x86_64-linux-gnu
 
     # Étape 7 : Sauvegarder les fichiers DLL et exécutables générés en tant qu'artifacts
     #- name: Save artifacts
