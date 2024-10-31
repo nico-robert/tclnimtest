@@ -57,7 +57,7 @@ jobs:
     # Étape 6 : Lancer les scripts/tests Tcl
     - name: Create Directory
       run: |
-        mkdir -p /usr/local/Cellar/tcl-tk/8.6.14/lib
+        sudo mkdir -p /usr/local/Cellar/tcl-tk/8.6.14/lib
         sudo cp -f /tmp/tcl/tcl86/lib/libtclstub8.6.a /usr/local/Cellar/tcl-tk/8.6.14/lib
         sudo cp -f /tmp/tcl/tcl86/lib/libtkstub8.6.a /usr/local/Cellar/tcl-tk/8.6.14/lib
 
