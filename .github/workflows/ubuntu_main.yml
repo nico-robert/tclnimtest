@@ -52,13 +52,12 @@ jobs:
         sudo cp -f /tmp/tcl/tcl86/lib/libtkstub8.6.a /usr/lib/x86_64-linux-gnu
 
     # Étape 7 : Sauvegarder les fichiers DLL et exécutables générés en tant qu'artifacts
-    #- name: Save artifacts
-    #  uses: actions/upload-artifact@v3
-    #  with:
-    #    name: Tcl86
-    #    path: |
-    #      C:\Tcl86\bin
-    #      C:\Tcl86\lib
+    - name: Save artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: Tcl86
+        path: |
+          /usr/lib/x86_64-linux-gnu
 
     # Étape 2 : Installer Nim
     #- name: Install Nim
