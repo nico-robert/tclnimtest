@@ -57,7 +57,8 @@ jobs:
       with:
         name: Tcl86
         path: |
-          /usr/lib/x86_64-linux-gnu
+          /usr/lib/x86_64-linux-gnu/libtclstub8.6.a
+          /usr/lib/x86_64-linux-gnu/libtkstub8.6.a
 
     # Étape 2 : Installer Nim
     #- name: Install Nim
