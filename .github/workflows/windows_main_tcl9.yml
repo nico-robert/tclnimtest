@@ -1,0 +1,75 @@
+name: CI for Tcl on Windows using nmake
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    # Étape 1 : Vérifiez le dépôt
+    - name: Checkout repository
+      uses: actions/checkout@v3
+          # Note msvc defaults to 64-bit
+      with:
+        submodules: recursive  # Récupère tous les sous-modules de manière récursive
+        fetch-depth: 0         # Nécessaire pour récupérer tout l'historique et non une version superficielle
+
+    # Étape 2 : Initialiser MSVC
+    - name: Init MSVC
+      uses: ilammy/msvc-dev-cmd@v1
+      with:
+        arch: x64
+
+    # Étape 3 : Télécharger les sources de Tcl
+    - name: Download Tcl source
+      run: |
+        curl -L https://sourceforge.net/projects/tcl/files/Tcl/9.0.0/tcl900-src.zip -o tcl900-src.zip
+        tar -xf tcl900-src.zip
+        curl -L https://sourceforge.net/projects/tcl/files/Tcl/9.0.0/tk900-src.zip -o tk900-src.zip
+        tar -xf tk900-src.zip
+
+    # Étape 4 : Compiler Tcl avec nmake
+    - name: Build Tcl with nmake
+      run: |
+        cd tcl9.0.0\win
+        nmake -f makefile.vc INSTALLDIR=C:\dev\Tcl90
+        nmake -f makefile.vc install INSTALLDIR=C:\dev\Tcl90
+    # Étape 5 : Compiler Tk avec nmake
+    #- name: Build Tk with nmake
+    #  run: |
+    #    cd tk9.0.0\win
+    #    nmake -f makefile.vc INSTALLDIR=C:\dev\Tcl86 TCLDIR=../../tcl9.0.0
+    #    nmake -f makefile.vc install INSTALLDIR=C:\dev\Tcl86 TCLDIR=../../tcl9.0.0
+    # Étape 6 : Lancer les scripts/tests Tcl
+    #- name: Run Tcl scripts/tests
+    #  run: |
+    #    C:\dev\Tcl90\bin\tclsh90.exe ./test/test_script.tcl
+
+    # Étape 7 : Sauvegarder les fichiers DLL et exécutables générés en tant qu'artifacts
+    #- name: Save artifacts
+    #  uses: actions/upload-artifact@v3
+    #  with:
+    #    name: Tcl86
+    #    path: |
+    #      C:\Tcl86\bin
+    #      C:\Tcl86\lib
+
+    # Étape 2 : Installer Nim
+    - name: Install Nim
+      uses: jiro4989/setup-nim-action@v2
+      with:
+        nim-version: 2.0.6  # Vous pouvez remplacer par une version spécifique, comme '2.0.6'
+
+    # Étape 3 : Vérifier l'installation de Nim
+    - name: Compiler pix
+      run: |
+        cd src
+        nim c --path:tcl9pix -d:release -d:tcl9 --app:lib --out:"c:/temp/libpix9.dll" pix9.nim
+        C:\dev\Tcl90\bin\tclsh90.exe 9.tcl
