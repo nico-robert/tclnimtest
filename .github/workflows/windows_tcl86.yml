@@ -40,7 +40,7 @@ jobs:
         nim-version: 2.0.6
 
     # Step 6 : Compile Tcl + Nim
-    - name: Compile pix
+    - name: Compile Tcl + Nim
       run: |
         cd src
         nim c --path:tcl86pix -d:release --app:lib --cc:"vcc" --passL:"C:/dev/Tcl86/lib/tclstub86.lib" --out:"C:/temp/pix86.dll" pix86.nim
@@ -49,6 +49,5 @@ jobs:
     - name: Test Tcl dll
       run: |
         echo "C:\dev\Tcl86\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-        echo "Updated PATH: $env:PATH"
         cd src
         tclsh86.exe test_86.tcl

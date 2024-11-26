@@ -40,7 +40,7 @@ jobs:
         nim-version: 2.0.6
 
     # Step 6 : Compile Tcl + Nim
-    - name: Compile pix
+    - name: Compile Tcl + Nim
       run: |
         cd src
         nim c --path:tcl9pix -d:release --app:lib --cc:"vcc" --passL:"C:/dev/Tcl90/lib/tclstub.lib" --out:"C:/temp/pix90.dll" pix9.nim
@@ -48,5 +48,6 @@ jobs:
     # Step 7 : Test Tcl dll
     - name: Test Tcl dll
       run: |
+        echo "C:\dev\Tcl90\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
         cd src
-        C:\dev\Tcl90\bin\tclsh90.exe test_90.tcl
+        tclsh90.exe test_90.tcl
