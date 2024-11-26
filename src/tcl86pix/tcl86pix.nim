@@ -6,6 +6,7 @@ const
   CONTINUE* = 4
 
 type
+  TFreeProc* = proc (theBlock: pointer){.cdecl.}
   TInterp*{.final.} = object  #  Event Definitions
     result*: cstring # Do not access this directly. Use
                      # Tcl_GetStringResult since result

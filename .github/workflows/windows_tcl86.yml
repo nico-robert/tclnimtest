@@ -43,7 +43,7 @@ jobs:
     - name: Compile pix
       run: |
         cd src
-        nim c --path:tcl86pix -d:release --app:lib --passL:"C:/dev/Tcl86/lib/tclstub86.lib" --out:"C:/temp/pix86.dll" pix86.nim
+        nim c --path:tcl86pix -d:release --app:lib --cc:"vcc" --passL:"C:/dev/Tcl86/lib/tclstub86.lib" --out:"C:/temp/pix86.dll" pix86.nim
 
     # Step 7 : Test Tcl dll
     - name: Test Tcl dll
