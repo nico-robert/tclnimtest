@@ -48,7 +48,7 @@ jobs:
     # Step 7 : Test Tcl dll
     - name: Test Tcl dll
       run: |
-        echo "C:\dev\Tcl86\bin" >> $env:GITHUB_ENV
+        echo "C:\dev\Tcl86\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
         echo "Updated PATH: $env:PATH"
         cd src
         tclsh86.exe test_86.tcl
