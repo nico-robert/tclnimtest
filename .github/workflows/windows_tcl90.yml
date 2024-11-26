@@ -48,5 +48,4 @@ jobs:
     # Step 7 : Test Tcl dll
     - name: Test Tcl dll
       run: |
-        cd src
-        "C:\dev\Tcl90\bin\tclsh90.exe" test_90.tcl
+        C:\dev\Tcl90\bin\tclsh90.exe test_90.tcl
