@@ -1,0 +1,52 @@
+name: Tcl86 + nim
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    # Step 1 : Repository
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # Step 2 : Init MSVC
+    - name: Init MSVC
+      uses: ilammy/msvc-dev-cmd@v1
+      with:
+        arch: x64
+
+    # Step 3 : Download Tcl source
+    - name: Download Tcl source
+      run: |
+        curl -L https://sourceforge.net/projects/tcl/files/Tcl/8.6.14/tcl8614-src.zip -o tcl8614-src.zip
+        tar -xf tcl8614-src.zip
+
+    # Step 4 : Build Tcl 8.6
+    - name: Build Tcl with nmake
+      run: |
+        cd tcl8.6.14\win
+        nmake -f makefile.vc INSTALLDIR=C:\dev\Tcl86
+        nmake -f makefile.vc install INSTALLDIR=C:\dev\Tcl86
+
+    # Step 5 : Install Nim
+    - name: Install Nim
+      uses: jiro4989/setup-nim-action@v2
+      with:
+        nim-version: 2.0.6
+
+    # Step 6 : Compile Tcl + Nim
+    - name: Compile pix
+      run: |
+        cd src
+        nim c --path:tcl86pix -d:release --app:lib --passL:"C:/dev/Tcl86/lib/tclstub86.lib" --out:"C:/temp/pix86.dll" pix86.nim
+
+    # Step 7 : Test Tcl dll
+    - name: Test Tcl dll
+      run: |
+        cd src
+        C:\dev\Tcl86\bin\tclsh86.exe test_86.tcl
