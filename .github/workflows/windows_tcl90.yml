@@ -1,0 +1,52 @@
+name: Tcl9 + nim
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    # Step 1 : Repository
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # Step 2 : Init MSVC
+    - name: Init MSVC
+      uses: ilammy/msvc-dev-cmd@v1
+      with:
+        arch: x64
+
+    # Step 3 : Download Tcl source
+    - name: Download Tcl source
+      run: |
+        curl -L https://sourceforge.net/projects/tcl/files/Tcl/9.0.0/tcl900-src.zip -o tcl900-src.zip
+        tar -xf tcl900-src.zip
+
+    # Step 4 : Build Tcl 9
+    - name: Build Tcl with nmake
+      run: |
+        cd tcl9.0.0\win
+        nmake -f makefile.vc INSTALLDIR=C:\dev\Tcl90
+        nmake -f makefile.vc install INSTALLDIR=C:\dev\Tcl90
+
+    # Step 5 : Install Nim
+    - name: Install Nim
+      uses: jiro4989/setup-nim-action@v2
+      with:
+        nim-version: 2.0.6
+
+    # Step 6 : Compile Tcl + Nim
+    - name: Compile pix
+      run: |
+        cd src
+        nim c --path:tcl9pix -d:release --app:lib --passL:"C:/dev/Tcl90/lib/tclstub.lib" --out:"C:/temp/pix90.dll" pix9.nim
+
+    # Step 7 : Test Tcl dll
+    - name: Test Tcl dll
+      run: |
+        cd src
+        C:\dev\Tcl90\bin\tclsh90.exe test_90.tcl
